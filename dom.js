@@ -69,15 +69,84 @@
 // lastItem.style.color = "blue";
 
 //   QUERYSELECTORALL    //
-var titles = document.querySelectorAll(".title");
-titles[0].textContent = "hello";
+// var titles = document.querySelectorAll(".title");
+// titles[0].textContent = "hello";
 
-var odd = document.querySelectorAll("li:nth-child(odd)");
-var even = document.querySelectorAll("li:nth-child(even)");
+// var odd = document.querySelectorAll("li:nth-child(odd)");
+// var even = document.querySelectorAll("li:nth-child(even)");
 
-for (var i = 0; i < odd.length; i++) {
-  odd[i].style.backgroundColor = "green";
-  even[i].style.backgroundColor = "grey";
-}
-var secondli = document.querySelectorAll("li:nth-child(2)")[0];
-secondli.style.color = "green";
+// for (var i = 0; i < odd.length; i++) {
+//   odd[i].style.backgroundColor = "green";
+//   even[i].style.backgroundColor = "grey";
+// }
+// var secondli = document.querySelectorAll("li:nth-child(2)")[0];
+// secondli.style.color = "green";
+
+// TRAVERSING THE DOM   //
+var itemList = document.querySelector("#items");
+//parentNode
+// console.log(itemList.parentNode);
+// itemList.parentNode.style.backgroundColor = "pink";
+// console.log(itemList.parentNode.parentNode);
+
+// //parentElement
+// console.log(itemList.parentElement);
+// itemList.parentElement.style.backgroundColor = "blue";
+// console.log(itemList.parentElement.parentElement);
+
+// //  childNodes
+// //console.log(itemList.chileNodes);
+
+// console.log(itemList.children);
+// console.log(itemList.children[1]);
+// itemList.children[1].style.backgroundColor = "yellow";
+
+//   FirstChild
+// console.log(itemList.firstChild);
+// //   FirstElementChild
+// console.log(itemList.firstElementChild);
+// itemList.firstElementChild.textContent = "HELLO 1";
+
+// //   LastChild
+// console.log(itemList.lastChild);
+// //   lastElementChild
+// console.log(itemList.lastElementChild);
+// itemList.lastElementChild.textContent = "HELLO 4";
+
+//    nextSibling
+// console.log(itemList.nextSibling);
+
+// //    nextElementSibling
+//   console.log(itemList.nextElementSibling);
+// //    previous Sibling
+//  console.log(itemList.previousSibling);
+//  //   previousElementSibling
+//  console.log(itemList.previousElementSibling);
+// itemList.previousElementSibling.computedStyleMap.color = "pink";
+
+//CREATE A DIV
+var newDiv = document.createElement("div");
+
+// add class
+newDiv.className = "hello";
+// add id
+newDiv.id = "hello1";
+
+// add attribute
+newDiv.setAttribute("title", "hello Div");
+
+// Create a textNode
+var newDivText = document.createTextNode("Hello World");
+
+// add text to div
+newDiv.appendChild(newDivText);
+
+var container = document.querySelector("header .container");
+var h1 = document.querySelector("header h1");
+console.log(newDiv);
+
+newDiv.style.fontSize = "30px";
+
+container.insertBefore(newDiv, h1);
+var item = document.querySelector("ul li:nth-child(1)");
+item.parentNode.insertBefore(newDiv, item);
