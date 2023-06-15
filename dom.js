@@ -28,14 +28,22 @@
 // item[0].style.fontWeight = "bold";
 // item[0].style.color = "green";
 
-var items = document.getElementsByClassName("list-group-item");
+// var items = document.getElementsByClassName("list-group-item");
 // console.log(items);
 // items[1].textContent = "Hello 3";
 // items.style.fontWeight = "bold";
 //items[2].Style.backgroundColor = "yellow";
 
-for (var i = 0; i < items.length; i++) {
-  items[i].style.fontWeight = "bold";
-  items[i].style.color = "blue";
+// for (var i = 0; i < items.length; i++) {
+//   items[i].style.fontWeight = "bold";
+//   items[i].style.color = "blue";
+// }
+// items[2].style.backgroundColor = "green";
+
+var li = document.getElementsByTagName("li");
+
+for (var i = 0; i < li.length; i++) {
+  li[i].style.fontWeight = "bold";
+  li[i].style.color = "blue";
 }
-items[2].style.backgroundColor = "green";
+li[2].style.backgroundColor = "green";
