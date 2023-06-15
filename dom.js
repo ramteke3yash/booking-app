@@ -22,6 +22,7 @@
 // headerTitle.innerHTML = "<h3>hello</h3>";
 // header.style.borderBottom = "solid 3px #000";
 
+//  GET ELEMENTBY CLASS    //
 // var item = document.getElementsByClassName("title");
 //  console.log(item);
 //  console.log(item[0]);
@@ -39,11 +40,44 @@
 //   items[i].style.color = "blue";
 // }
 // items[2].style.backgroundColor = "green";
+//     GET ELEMENT BY TAG    //
+// var li = document.getElementsByTagName("li");
 
-var li = document.getElementsByTagName("li");
+// for (var i = 0; i < li.length; i++) {
+//   li[i].style.fontWeight = "bold";
+//   li[i].style.color = "blue";
+// }
+// li[2].style.backgroundColor = "green";
 
-for (var i = 0; i < li.length; i++) {
-  li[i].style.fontWeight = "bold";
-  li[i].style.color = "blue";
+//  QUERYSELECTOR   //
+// var header = document.querySelector("#main-header");
+// header.style.borderBottom = "solid 4px #ccc";
+
+// var input = document.querySelector("input");
+// input.value = "Hello World";
+
+// var submit = document.querySelector('input[type="submit"]');
+// submit.value = "SEND";
+
+// var item = document.querySelector(".list-group-item");
+// item.style.color = "red";
+
+// var lastItem = document.querySelector(".list-group-item:last-child");
+// lastItem.style.color = "blue";
+
+// var secondItem = document.querySelector(".list-group-item:nth-child(2)");
+// lastItem.style.color = "blue";
+
+//   QUERYSELECTORALL    //
+var titles = document.querySelectorAll(".title");
+titles[0].textContent = "hello";
+
+var odd = document.querySelectorAll("li:nth-child(odd)");
+var even = document.querySelectorAll("li:nth-child(even)");
+
+for (var i = 0; i < odd.length; i++) {
+  odd[i].style.backgroundColor = "green";
+  even[i].style.backgroundColor = "grey";
 }
-li[2].style.backgroundColor = "green";
+var secondli = document.querySelectorAll("li:nth-child(2)")[0];
+secondli.style.color = "green";
