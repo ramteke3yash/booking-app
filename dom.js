@@ -22,8 +22,20 @@
 // headerTitle.innerHTML = "<h3>hello</h3>";
 // header.style.borderBottom = "solid 3px #000";
 
-var item = document.getElementsByClassName("title");
-// console.log(item);
-// console.log(item[0]);
-item[0].style.fontWeight = "bold";
-item[0].style.color = "green";
+// var item = document.getElementsByClassName("title");
+//  console.log(item);
+//  console.log(item[0]);
+// item[0].style.fontWeight = "bold";
+// item[0].style.color = "green";
+
+var items = document.getElementsByClassName("list-group-item");
+// console.log(items);
+// items[1].textContent = "Hello 3";
+// items.style.fontWeight = "bold";
+//items[2].Style.backgroundColor = "yellow";
+
+for (var i = 0; i < items.length; i++) {
+  items[i].style.fontWeight = "bold";
+  items[i].style.color = "blue";
+}
+items[2].style.backgroundColor = "green";
