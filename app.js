@@ -36,21 +36,76 @@ form.addEventListener("submit", function (e) {
   // Display a success message
   const msg = document.querySelector(".msg");
   msg.innerHTML = "Submitted";
+
+  // Reload the user list
+  loadUserList();
 });
 
-// Load existing users from local storage
-document.addEventListener("DOMContentLoaded", function () {
+// Function to delete a user
+function deleteUser(index) {
+  // Get existing users from local storage
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  // Remove the user at the specified index
+  users.splice(index, 1);
+
+  // Store the updated users array in local storage
+  localStorage.setItem("users", JSON.stringify(users));
+
+  // Reload the user list
+  loadUserList();
+}
+
+// Function to load existing users from local storage and display them
+function loadUserList() {
   let users = JSON.parse(localStorage.getItem("users")) || [];
   const userList = document.getElementById("users");
 
+  // Clear the user list
+  userList.innerHTML = "";
+
   // Display each user in the user list
-  users.forEach(function (user) {
+  users.forEach(function (user, index) {
     const li = document.createElement("li");
     li.appendChild(
       document.createTextNode(
         `Name: ${user.name}, Email: ${user.email}, Phone: ${user.phone}`
       )
     );
+
+    // Create delete button for each user
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
+    deleteButton.addEventListener("click", function () {
+      deleteUser(index);
+    });
+
+    // Append delete button to the list item
+    li.appendChild(deleteButton);
+
+    // Append list item to the user list
     userList.appendChild(li);
   });
+}
+
+// Load existing users from local storage and display them
+document.addEventListener("DOMContentLoaded", function () {
+  loadUserList();
 });
+
+// // Load existing users from local storage
+// document.addEventListener("DOMContentLoaded", function () {
+//   let users = JSON.parse(localStorage.getItem("users")) || [];
+//   const userList = document.getElementById("users");
+
+//   // Display each user in the user list
+//   users.forEach(function (user) {
+//     const li = document.createElement("li");
+//     li.appendChild(
+//       document.createTextNode(
+//         `Name: ${user.name}, Email: ${user.email}, Phone: ${user.phone}`
+//       )
+//     );
+//     userList.appendChild(li);
+//   });
+// });
