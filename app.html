@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Booking appointment App</title>
+    <link rel="stylesheet" href="app.css" />
+    <!-- Add Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Booking appointment</h1>
+    </header>
+
+    <section class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form id="my-form">
+            <h1>Add User</h1>
+            <div class="msg"></div>
+            <div>
+              <label for="name">Name:</label>
+              <input type="text" id="name" />
+            </div>
+            <div>
+              <label for="email">Email:</label>
+              <input type="text" id="email" />
+            </div>
+            <input class="btn" type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+
+      <ul id="users"></ul>
+    </section>
+
+    <script src="app.js"></script>
+    <!-- Add Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
