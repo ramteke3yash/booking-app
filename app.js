@@ -8,13 +8,15 @@ form.addEventListener("submit", function (e) {
   // Get the input values
   const nameInput = document.getElementById("name");
   const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
   const name = nameInput.value;
   const email = emailInput.value;
-
+  const phone = phoneInput.value;
   // Create an object to store the user details
   const user = {
     name: name,
     email: email,
+    phone: phone,
   };
 
   // Get existing users from local storage
@@ -29,23 +31,26 @@ form.addEventListener("submit", function (e) {
   // Clear the input fields
   nameInput.value = "";
   emailInput.value = "";
+  phoneInput.value = "";
 
   // Display a success message
   const msg = document.querySelector(".msg");
   msg.innerHTML = "Submitted";
 });
 
-// // Load existing users from local storage
-// document.addEventListener("DOMContentLoaded", function () {
-//   let users = JSON.parse(localStorage.getItem("users")) || [];
-//   const userList = document.getElementById("users");
+// Load existing users from local storage
+document.addEventListener("DOMContentLoaded", function () {
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  const userList = document.getElementById("users");
 
-//   // Display each user in the user list
-//   users.forEach(function (user) {
-//     const li = document.createElement("li");
-//     li.appendChild(
-//       document.createTextNode(`Name: ${user.name}, Email: ${user.email}`)
-//     );
-//     userList.appendChild(li);
-//   });
-// });
+  // Display each user in the user list
+  users.forEach(function (user) {
+    const li = document.createElement("li");
+    li.appendChild(
+      document.createTextNode(
+        `Name: ${user.name}, Email: ${user.email}, Phone: ${user.phone}`
+      )
+    );
+    userList.appendChild(li);
+  });
+});
