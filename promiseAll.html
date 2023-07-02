@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function createPost(postData) {
+      return new Promise((resolve, reject) => {
+        // Logic to create the post
+        const post = {
+          // Post details
+          ...postData,
+        };
+        resolve(post);
+      });
+    }
+
+    function updateLastActivityTime() {
+      return new Promise((resolve, reject) => {
+        // Logic to update last activity time
+        setTimeout(() => {
+          const newLastActivityTime = new Date().toISOString();
+          resolve(newLastActivityTime);
+        }, 1000); // Simulating a delay of 1 second
+      });
+    }
+
+    function deletePost(post) {
+      return new Promise((resolve, reject) => {
+        // Logic to delete the post
+        // ...
+        resolve();
+      });
+    }
+
+    function updateLastUserActivityTime() {
+      return new Promise((resolve, reject) => {
+        updateLastActivityTime()
+          .then((lastActivityTime) => {
+            console.log("Last Activity Time:", lastActivityTime);
+            resolve();
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    }
+
+    function userUpdatesAPost() {
+      Promise.all([
+        createPost({ title: "Post Five", body: "This is Post Five" }),
+        updateLastUserActivityTime(),
+      ])
+        .then(([createdPost]) => {
+          deletePost(createdPost)
+            .then(() => {
+              console.log("Post Deleted:", createdPost);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    userUpdatesAPost();
+  </script>
+</html>
