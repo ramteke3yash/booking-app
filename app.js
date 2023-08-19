@@ -1,6 +1,3 @@
-const API_BASE_URL =
-  "https://crudcrud.com/api/2565a4377db345d6a8c9062c8ffe89fd/appointment2";
-
 // Get the form element
 const form = document.getElementById("my-form");
 const nameInput = document.getElementById("name");
@@ -80,7 +77,6 @@ form.addEventListener("submit", async function (e) {
 
   if (editId) {
     // Editing an existing user
-    //const editIndex = form.dataset.editIndex;
     const user = { name, email, phone };
     try {
       const response = await axios.put(`${API_BASE_URL}/${editId}`, user);
@@ -93,15 +89,12 @@ form.addEventListener("submit", async function (e) {
   } else {
     // Creating a new user
     const user = { name, email, phone };
-    axios
-      .post(API_BASE_URL, user)
-      .then((response) => {
-        //console.log(response.data);
-        loadUserList();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const response = await axios.post(API_BASE_URL, user);
+      loadUserList();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // Clear the input fields
