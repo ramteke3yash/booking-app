@@ -1,111 +1,84 @@
-// Get the form element
-const form = document.getElementById("my-form");
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const phoneInput = document.getElementById("phone");
-const userList = document.getElementById("users");
-let editId = null;
+const express = require("express");
+const bodyParser = require("body-parser");
 
-// Function to edit a user
-function editUser(user) {
-  nameInput.value = user.name;
-  emailInput.value = user.email;
-  phoneInput.value = user.phone;
-  editId = user._id;
-}
+const sequelize = require("./util/database");
+const User = require("./models/user");
+const cors = require("cors");
+const { error } = require("console");
 
-// Function to delete a user
-async function deleteUser(id) {
+const app = express();
+
+app.use(cors());
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.post("/user/add-user", async (req, res, next) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/${id}`);
+    if (!req.body.number) {
+      // throw new Error("Phone is mandatory");
+      console.log("some working");
+      return res.status(400).json({ error: "Phone is required " });
+    }
+    const name = req.body.name;
+    const email = req.body.email;
+    const phonenumber = req.body.number;
 
-    //console.log("success");
-    loadUserList(); // Reload the user list
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-// Function to load existing users from the API and display them
-async function loadUserList() {
-  try {
-    const response = await axios.get(API_BASE_URL);
-
-    const users = response.data;
-
-    // Clear the user list
-    userList.innerHTML = "";
-
-    // Display each user in the user list
-    users.forEach(function (user, index) {
-      const li = document.createElement("li");
-      li.textContent = `Name: ${user.name}, Email: ${user.email}, Phone: ${user.phone}`;
-
-      // Create the Edit button
-      const editButton = document.createElement("button");
-      editButton.textContent = "Edit";
-      editButton.addEventListener("click", function () {
-        editUser(user);
-      });
-      li.appendChild(editButton);
-
-      // Create delete button for each user
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.addEventListener("click", function () {
-        deleteUser(user._id);
-      });
-
-      // Append delete button to the list item
-      li.appendChild(deleteButton);
-      // Append list item to the user list
-      userList.appendChild(li);
+    const data = await User.create({
+      name: name,
+      email: email,
+      phonenumber: phonenumber,
     });
-  } catch (err) {
-    console.log(err);
+    res.status(201).json({ newUserDetail: data });
+  } catch (error) {
+    console.log("add user is failing", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-}
-
-// Add event listener for form submission
-form.addEventListener("submit", async function (e) {
-  e.preventDefault(); // Prevent form submission
-
-  // Get the input values
-  const name = nameInput.value;
-  const email = emailInput.value;
-  const phone = phoneInput.value;
-
-  if (editId) {
-    // Editing an existing user
-    const user = { name, email, phone };
-    try {
-      const response = await axios.put(`${API_BASE_URL}/${editId}`, user);
-
-      // Reload the user list
-      loadUserList();
-    } catch (err) {
-      console.log(err);
-    }
-  } else {
-    // Creating a new user
-    const user = { name, email, phone };
-    try {
-      const response = await axios.post(API_BASE_URL, user);
-      loadUserList();
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  // Clear the input fields
-  nameInput.value = "";
-  emailInput.value = "";
-  phoneInput.value = "";
-
-  // Display a success message
-  const msg = document.querySelector(".msg");
-  msg.textContent = "Submitted";
 });
 
-// Load existing users from the API and display them
-document.addEventListener("DOMContentLoaded", loadUserList);
+app.get("/user/get-users", async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).json({ allUsers: users });
+  } catch (error) {
+    console.log("get user is failing", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.delete("/user/delete-user/:id", async (req, res) => {
+  const uId = req.params.id;
+  await User.destroy({ where: { id: uId } });
+  res.sendStatus(200);
+});
+
+app.put("/user/edit-user/:id", async (req, res) => {
+  const uId = req.params.id;
+  const { name, email, phonenumber } = req.body;
+
+  try {
+    const user = await User.findByPk(uId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.name = name;
+    user.email = email;
+    user.phonenumber = phonenumber;
+    await user.save();
+
+    res.status(200).json({ updatedUser: user });
+  } catch (error) {
+    console.log("edit user is failing", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+sequelize
+  .sync()
+  .then((result) => {
+    //console.log(result);
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
